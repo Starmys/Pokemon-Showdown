@@ -3243,7 +3243,7 @@ export const Formats: FormatList = [
 		name: "[Gen 8] Durants",
 		desc: `男人的决斗！`,
 
-		mod: 'gen8',
+		mod: 'pschinaforfun',
 		team: 'randomDurants',
 		ruleset: ['Team Preview'],
 	},
@@ -3251,7 +3251,7 @@ export const Formats: FormatList = [
 		name: "[Gen 8] Metronome",
 		desc: `真男人的决斗！`,
 
-		mod: 'gen8',
+		mod: 'pschinaforfun',
 		team: 'randomMetronome',
 		teamLength: {
 			battle: 1,
