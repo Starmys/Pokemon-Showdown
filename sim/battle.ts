@@ -13,7 +13,7 @@ import {Side} from './side';
 import {State} from './state';
 import {BattleQueue, Action} from './battle-queue';
 import {BattleActions} from './battle-actions';
-import {Utils} from '../lib';
+import {Utils, FS} from '../lib';
 
 interface BattleOptions {
 	format?: Format;
@@ -144,6 +144,16 @@ export class Battle {
 	constructor(options: BattleOptions) {
 		this.log = [];
 		this.add('t:', Math.floor(Date.now() / 1000));
+
+		if (options.formatid === 'gen7randomformats') {
+			this.prng = options.prng || new PRNG(options.seed || undefined);
+			const teamPool = JSON.parse(FS('config/random-formats-teams.json').readSync());
+			options.format = Dex.formats.get(this.prng.sample(Object.keys(teamPool)), true);
+			this.add('html', `<div class="broadcast-green"><strong>CURRENT FORMAT: ` + options.format.name + ` </strong></div>`);
+			options.format.name = "[Gen 7] Random Formats";
+			// @ts-ignore
+			this.getTeam = (options: PlayerOptions) => Teams.unpack(this.prng.sample(teamPool[this.format.id]));
+		}
 
 		const format = options.format || Dex.formats.get(options.formatid, true);
 		this.format = format;
