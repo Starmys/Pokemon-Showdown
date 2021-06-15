@@ -751,8 +751,10 @@ export const commands: Chat.ChatCommands = {
 					Math.max(...userProperties[user.id]['bag'].filter(x => x).map(x => parseInt(x.split('|')[10]) || 100)),
 					wantLegend
 				);
-				if ((!wantLegend) && (!bot || !wildPokemon || inPetModeBattle(user.id) ||
-					((user.id in userSearch) && (Date.now() - userSearch[user.id] < LAWNCD)))) {
+				if (!bot || !wantLegend && (
+					!wildPokemon || inPetModeBattle(user.id) ||
+					((user.id in userSearch) && (Date.now() - userSearch[user.id] < LAWNCD))
+				)) {
 					return this.popupReply('没有发现野生的宝可梦哦');
 				}
 				userSearch[user.id] = Date.now();
